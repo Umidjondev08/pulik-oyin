@@ -4,32 +4,32 @@ import sys
 
 pygame.init()
 
-# Oyna sozlamalari
+
 WIDTH = 600
 HEIGHT = 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Shooter")
 
-# Ranglar
+
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+BLACK = (0, 0, 0,)
+RED = (255, 0, 0,)
 
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 30)
 
-# Player
+
 player_width = 50
 player_height = 60
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - 80
 player_speed = 7
 
-# Bullet
-bullets = []
-bullet_speed = 8
 
-# Enemy
+bullets = []
+
+
+
 enemies = []
 enemy_speed = 3
 
@@ -45,7 +45,7 @@ def draw_enemy(x, y):
     pygame.draw.rect(screen, (0, 255, 0), (x, y, 40, 40))
 
 def show_score():
-    text = font.render(f"Score: {score}", True, WHITE)
+    text = font.render(f"score: {score}", True, WHITE)
     screen.blit(text, (10, 10))
 
 def game_over():
@@ -56,18 +56,18 @@ def game_over():
     pygame.quit()
     sys.exit()
 
-# O‘yin sikli
+
 running = True
 while running:
     clock.tick(60)
     screen.fill(BLACK)
 
-    # Eventlar
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            
 
-    # Tugmalar
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player_x > 0:
         player_x -= player_speed
@@ -77,24 +77,24 @@ while running:
         if len(bullets) < 5:
             bullets.append([player_x + player_width//2, player_y])
 
-    # Bullet harakati
+
     for bullet in bullets[:]:
         bullet[1] -= bullet_speed
         if bullet[1] < 0:
             bullets.remove(bullet)
 
-    # Enemy chiqarish
+
     if random.randint(1, 30) == 1:
         enemy_x = random.randint(0, WIDTH - 40)
         enemies.append([enemy_x, 0])
 
-    # Enemy harakati
+
     for enemy in enemies[:]:
-        enemy[1] += enemy_speed
+        enemy[1] > HEIGHT:
         if enemy[1] > HEIGHT:
             game_over()
 
-        # Collision
+
         for bullet in bullets:
             if (enemy[0] < bullet[0] < enemy[0] + 40 and
                 enemy[1] < bullet[1] < enemy[1] + 40):
@@ -104,16 +104,16 @@ while running:
                 enemy_speed += 0.1
                 break
 
-    # Chizish
+
     draw_player(player_x, player_y)
 
-    for bullet in bullets:
+    for bullet in enemies:
         draw_bullet(bullet[0], bullet[1])
 
-    for enemy in enemies:
-        draw_enemy(enemy[0], enemy[1])
+        for enemy in enemies:
+            draw_enemy(enemy[0], enemy[1])
 
-    show_score()
-    pygame.display.update()
+        show_score()
+        pygame.display.update()
 
 pygame.quit()
